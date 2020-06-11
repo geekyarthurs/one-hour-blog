@@ -29,12 +29,13 @@ def delete(request, pk):
 
 
 def post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = Post.objects.get(pk=pk)
 
     if (request.method == 'POST'):
         commentForm = CommentForm(request.POST)
         if commentForm.is_valid():
-            comment = commentForm.save()
+            comment = commentForm.save(commit=False)
+
             comment.post = post
             comment.save()
 
