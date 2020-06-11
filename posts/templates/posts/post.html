@@ -1,0 +1,89 @@
+{% extends 'posts/base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+
+<div class="row">
+
+
+    <div class="col-12 mx-auto">
+
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h1 class="card-title"> {{post.title}} </h1>
+
+                <p class="lead"> {{post.content}} </p>
+
+                <hr>
+
+                Posted by : {{post.author}} <br>
+                Posted on : {{post.postedDate}}
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-8 mx-auto mt-3">
+
+        <h5>Comments</h5>
+
+
+        <div class="card mb-3">
+
+            <div class="card-body">
+
+
+                <form action="" method="post">
+
+                {% csrf_token %}
+
+                    {{commentform|crispy}}
+
+                    <input type="submit" value="Add Comment" class="btn btn-primary">
+
+                </form>
+
+
+            </div>
+
+            <hr>
+
+
+        </div>
+
+
+        {% for comment in post.comment.all %}
+        <div class="card mb-3">
+
+
+
+            <div class="card-body">
+
+
+
+                <p class="lead"> {{comment.comment}} </p>
+
+                <hr>
+
+                Posted by : {{comment.writer}} <br>
+                Posted on : {{comment.postedDate}}
+
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+
+
+    </div>
+
+    {% endblock body_block %}
