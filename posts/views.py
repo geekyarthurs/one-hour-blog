@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import CreateView
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from .models import Post
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from .forms import updateForm
 
 
 class Home(LoginRequiredMixin, View):
@@ -56,3 +57,30 @@ def post(request, pk):
         'post': post,
         'commentform': commentForm
     })
+
+
+
+def updatePost(request,pk):
+    update_item = Post.objects.get(pk=pk)
+
+    form = updateForm(instance=update_item)
+    if request.method == 'POST':
+        form = updateForm(request.POST,instance=update_item)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+
+
+        else:
+            form = updateForm()
+
+
+
+
+    context = {
+
+            'forms' : form
+
+    }
+
+    return render(request,'posts/update.html',context) 
