@@ -27,6 +27,10 @@
 
 
                 <a class="btn btn-primary text-white float-right" href = "{% url 'blog:post' pk=post.pk  %}">Read More</a>
+
+            
+                <a class="btn btn-primary text-white float-right"  href="{% url 'blog:update' post.id %}">Update Post</a>
+      
     </div>
 </div>
 {% endfor %}
